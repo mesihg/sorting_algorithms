@@ -1,45 +1,49 @@
 #include "sort.h"
 
+
+/**
+ * swap - swaps the given inputs
+ *@a: integer input one
+ *@b: integer input two
+ */
+
+void swap(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 /**
  * partition - find partition position
- * @array: array of integers
+ * @arr: array of integers
  * @low: lowest point of the partition
  * @high: highest point of the partition
  * @size: size of the array
  *
  * Return: point of the partition
  */
-size_t partition(int *array, ssize_t low, ssize_t high, size_t size)
+int partition(int *arr, int low, int high, size_t size)
 {
-	ssize_t i, j;
-	int swap, pivot;
+	int pivot = arr[high];
+	int i = low;
+	int j;
 
-	pivot = array[high];
-	i = low - 1;
 	for (j = low; j < high; j++)
 	{
-		if (array[j] < pivot)
+		if (arr[j] <= pivot)
 		{
-			i++;
+			swap(&arr[i], &arr[j]);
 			if (i != j)
-			{
-				swap = array[i];
-				array[i] = array[j];
-				array[j] = swap;
-				print_array(array, size);
-			}
+				print_array(arr, size);
+			i++;
 		}
 	}
-	if (array[high] < array[i + 1])
-	{
-		swap = array[i + 1];
-		array[i + 1] = array[high];
-		array[high] = swap;
-		print_array(array, size);
-	}
-	return (i + 1);
+	swap(&arr[i], &arr[high]);
+	if (i != j)
+		print_array(arr, size);
+	return (i);
 }
-
 /**
  * quicksort - sorts a partition of an array of integers
  * @array: array of integers
